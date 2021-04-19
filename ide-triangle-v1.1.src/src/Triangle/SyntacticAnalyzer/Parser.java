@@ -145,14 +145,23 @@ public class Parser {
 
     Program programAST = null;
 
-    previousTokenPosition.start = 0;
+    /*previousTokenPosition.start = 0;
     previousTokenPosition.finish = 0;
+    lexicalAnalyser.scanForHTML();
+    
+    previousTokenPosition.start = 0;
+    previousTokenPosition.finish = 0;*/
     currentToken = lexicalAnalyser.scan();
 
+      System.out.println("antes del try de parser");
     try {
+        System.out.println("antes del command del try de parser");
       Command cAST = parseCommand();
+        System.out.println("antes del programAST del try de parser");
       programAST = new Program(cAST, previousTokenPosition);
+        System.out.println("antes del if del try de parser");
       if (currentToken.kind != Token.EOT) {
+          System.out.println("dentro del if del try de parser");
         syntacticError("\"%\" not expected after end of program",
           currentToken.spelling);
       }
