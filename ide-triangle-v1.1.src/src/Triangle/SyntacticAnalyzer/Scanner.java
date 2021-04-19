@@ -23,6 +23,7 @@ public final class Scanner {
   private char currentChar;
   private StringBuffer currentSpelling;
   private boolean currentlyScanningToken;
+  private HtmlReporter htmlReporter = new HtmlReporter();
 
   private boolean isLetter(char c) {
     return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
@@ -58,14 +59,73 @@ public final class Scanner {
   // the next character from the source program.
 
   private void takeIt() {
+//    System.out.println("estado del token "+currentlyScanningToken);
+//    System.out.println("char: " + currentChar);
+      
+    if(currentlyScanningToken == false){
+        //System.err.println("entra al if");
+        //htmlReporter.prueba();
+        htmlReporter.generarHTMLChar(sourceFile.sourceFile.getName(), currentChar);
+    }
     if (currentlyScanningToken)
       currentSpelling.append(currentChar);
+//    System.err.println("char: " + currentChar);
+//    System.err.println("spelling: " + currentSpelling);
+
+    
     currentChar = sourceFile.getSource();
   }
 
   // scanSeparator skips a single separator.
 
-  private void scanSeparator() {
+  private void scanSeparator() {    
+    switch (currentChar) {
+    case '!':
+      {
+        takeIt();
+        System.out.println("entra al separador   " + currentChar);
+        while ((currentChar != SourceFile.EOL) && (currentChar != SourceFile.EOT)){
+            takeIt();
+            //System.out.println("entra al separador   " + currentChar);
+//            if(currentSpelling == null){
+//                System.err.println("entra al if");
+//                htmlReporter.generarHTMLChar(sourceFile.sourceFile.getName(), currentChar, currentSpelling);
+//            }
+        }
+        if (currentChar == SourceFile.EOL){
+            takeIt();
+            //System.out.println("entra al separador   " + currentChar);
+//            if(currentSpelling == null){
+//                System.err.println("entra al if");
+//                htmlReporter.generarHTMLChar(sourceFile.sourceFile.getName(), currentChar, currentSpelling);
+//            }
+        }
+      }
+      
+      break;
+
+    case ' ': case '\n': case '\r': case '\t':
+        takeIt();
+        if(currentSpelling == null){
+            //System.err.println("entra al if");
+            htmlReporter.generarHTMLChar(sourceFile.sourceFile.getName(), currentChar);
+        }
+      break;
+    }
+    
+//    if(currentSpelling == null){
+//        System.err.println("entra al if");
+//        htmlReporter.generarHTMLChar(sourceFile.sourceFile.getName(), currentChar, currentSpelling);
+//    }
+    
+    //
+    
+    //currentSpelling = new StringBuffer("");
+    
+    
+  }
+
+  /*private void scanSeparator() {
     switch (currentChar) {
     case '!':
       {
@@ -81,8 +141,8 @@ public final class Scanner {
       takeIt();
       break;
     }
-  }
-
+  }*/
+  
   private int scanToken() {
 
     switch (currentChar) {
@@ -152,6 +212,14 @@ public final class Scanner {
       takeIt();
       return Token.IS;
 
+    case '|':
+        takeIt();
+        return Token.STICK;
+        
+    case '$':
+        takeIt();
+        return Token.DOLAR; 
+      
     case '(':
       takeIt();
       return Token.LPAREN;
@@ -185,31 +253,94 @@ public final class Scanner {
     }
   }
 
-  public Token scan () {
+  /*public Token scan() {
     Token tok;
     SourcePosition pos;
     int kind;
+      
+    
+    System.out.println("Scan");
 
     currentlyScanningToken = false;
+    
     while (currentChar == '!'
            || currentChar == ' '
            || currentChar == '\n'
            || currentChar == '\r'
            || currentChar == '\t')
       scanSeparator();
+    if(currentlyScanningToken == false ){
+    }
+        
+    //System.out.println("2");
 
     currentlyScanningToken = true;
     currentSpelling = new StringBuffer("");
     pos = new SourcePosition();
     pos.start = sourceFile.getCurrentLine();
 
+    //System.out.println("3");
     kind = scanToken();
-
     pos.finish = sourceFile.getCurrentLine();
+    //System.out.println("5");
+    //System.out.println(sourceFile.sourceFile.getName());
+    
     tok = new Token(kind, currentSpelling.toString(), pos);
+    //System.out.println("6");
+    //htmlReporter.generarHTMLToken(sourceFile.sourceFile.getName(),currentSpelling, tok.kind);
+    
     if (debug)
       System.out.println(tok);
+    //System.out.println("7");
     return tok;
-  }
+    
+  }*/
+  
+  public Token scan() {
+    Token tok;
+    SourcePosition pos;
+    //HtmlReporter htmlReporter = new HtmlReporter();
+    int kind;
+      
+    
+    System.out.println("scan for html");
 
+    currentlyScanningToken = false;
+    
+    while (currentChar == '!'
+           || currentChar == ' '
+           || currentChar == '\n'
+           || currentChar == '\r'
+           || currentChar == '\t')
+      scanSeparator();
+    if(currentlyScanningToken == false ){
+        //htmlReporter.generarHTMLChar(sourceFile.sourceFile.getName(), currentChar,currentSpelling);
+        //System.err.println("Cuando es false "+currentSpelling);
+    }
+        
+    //System.out.println("2");
+
+    currentlyScanningToken = true;
+    currentSpelling = new StringBuffer("");
+    pos = new SourcePosition();
+    pos.start = sourceFile.getCurrentLine();
+
+    //System.out.println("3");
+    kind = scanToken();
+    System.out.println("kind: " + kind);
+    System.out.println("currentSpelling: " + currentSpelling);
+    pos.finish = sourceFile.getCurrentLine();
+    //System.out.println("5");
+    //System.out.println(sourceFile.sourceFile.getName());
+    
+    tok = new Token(kind, currentSpelling.toString(), pos);
+    //System.out.println("6");
+    htmlReporter.generarHTMLToken(sourceFile.sourceFile.getName(),currentSpelling, tok.kind);
+    
+    if (debug)
+      System.out.println(tok);
+    //System.out.println("7");
+    return tok;
+
+    }
 }

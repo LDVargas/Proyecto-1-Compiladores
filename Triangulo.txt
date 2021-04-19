@@ -1,7 +1,6 @@
 Program		::=	 (Package-Declaration ";")* Command
 
-Command		::= 
-		 	 |  Command ; single-Command
+Command		::=  	 |  Command ; single-Command
 
 single-Command	::= 
 			 |  V-name := Expression
@@ -23,12 +22,10 @@ Expression		::= secondary-Expression
 			 |  let Declaration in Expression
 			 |  if Expression then Expression else Expression
 
-secondary-Expression
-			::= primary-Expression
+secondary-Expression	::= primary-Expression
 			 |  secondary-Expression Operator primary-Expression
 
-primary-Expression 
-			::= Integer-Literal
+primary-Expression 	::= Integer-Literal
 			 |  Character-Literal
 			 |  V-name
 			 |  Long-Identifier "(" Actual-Parameter-Sequence ")
@@ -55,14 +52,14 @@ Var-name	 	 ::= Identifier
 			 |  V-name "[" Expression "]"
 
 Declaration		::= compound-Declaration
-			|   Declaration ";"compound-Declaration
+			 |   Declaration ";"compound-Declaration
 
 single-Declaration
 			 ::= const Identifier ~ Expression
 			 |  var Identifier : Type-denoter
 			 |  proc Identifier ( Formal-Parameter-Sequence ) 
 			 	 "~" Command "end" 
-			 |"var" Identifier ":="Expressio
+			 |"var" Identifier ":="Expression
 
 compound-Declaration	::= single-Declaration
 			|"recursive" Proc-Funcs "end"
@@ -122,7 +119,7 @@ Token			::= Integer-Literal|Character-Literal|Identifier|Operator|
 			    func|if|in|let|of|proc|record|
 			    then|type|var|while|choose|elsif|for|from|loop|
 			    nothing|package|private|recursive|to|until|when|
-			    .|:|;|,|:=|~|(|)|[|]|{|}
+			    .|:|;|,|:=|~|(|)|[|]|{|}|$|..
 
 Integer-Literal	::= Digit Digit* 
 
@@ -137,7 +134,7 @@ Comment		::= ! Graphic* end-of-line
 Blank			::= space|tab|end-of-line 
 
 Graphic		::= Letter|Digit|Op-character|space|tab|.|:|;|,|
-			    ~|(|)|[|]|{|}|_|||!|'|`|"|#|$|..|	
+			    ~|(|)|[|]|{|}|_|||!|'|`|"|#|$	
 
 Letter		::= a|b|c|d|e|f|g|h|i|j|k|l|m|
     n|o|p|q|r|s|t|u|v|w|x|y|z|
@@ -166,8 +163,6 @@ Comandos
 <RepeatVarDeclCommand>
 <RepeatLoopCommand>
 <ReturnCommand/>
-<NextCommand> | <NextCommand/>
-<ExitCommand> | <ExitCommand/>
 
 Expresiones
 <ArrayExpression>
