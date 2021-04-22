@@ -6,6 +6,7 @@
 package Triangle.SyntacticAnalyzer;
 import javax.swing.*;
 import java.io.*;
+import java.util.Arrays;
 
 /**
  *
@@ -38,7 +39,8 @@ public class HtmlReporter {
             //System.out.println("kind " + kind);
             
             
-            if(kind >= 4 || kind <= 32){
+            if(kind >= 4 && kind <= 32){
+                System.err.println("kind en html " + kind);
                 bfWriter.write("<b>" + currentSpelling.toString() + "</b>");
                 //pWriter.println("<b>" + currentSpelling + "</b>");
             }
@@ -47,7 +49,16 @@ public class HtmlReporter {
                         currentSpelling + "</font>");
                 //pWriter.println("<font style='padding-left:1em'><font color='#0000cd'>" + 
                 //        currentSpelling + "</font>");
-            }/*else{
+            }
+            if( kind >= 33){
+                bfWriter.write(currentSpelling.toString());
+            }
+            
+            if(kind == 2){
+                System.err.println("current spelling no es un token " + currentSpelling);
+                bfWriter.write(currentSpelling.toString());
+            }
+            /*else{    
                 bfWriter.write(currentSpelling.toString());
                 //pWriter.println(currentSpelling);
             }*/
@@ -158,115 +169,3 @@ public class HtmlReporter {
     }
     
 }
-
-
-
-/*private int scanToken() {
-
-    switch (currentChar) {
-
-    case 'a':  case 'b':  case 'c':  case 'd':  case 'e':
-    case 'f':  case 'g':  case 'h':  case 'i':  case 'j':
-    case 'k':  case 'l':  case 'm':  case 'n':  case 'o':
-    case 'p':  case 'q':  case 'r':  case 's':  case 't':
-    case 'u':  case 'v':  case 'w':  case 'x':  case 'y':
-    case 'z':
-    case 'A':  case 'B':  case 'C':  case 'D':  case 'E':
-    case 'F':  case 'G':  case 'H':  case 'I':  case 'J':
-    case 'K':  case 'L':  case 'M':  case 'N':  case 'O':
-    case 'P':  case 'Q':  case 'R':  case 'S':  case 'T':
-    case 'U':  case 'V':  case 'W':  case 'X':  case 'Y':
-    case 'Z':
-      takeIt();
-      while (isLetter(currentChar) || isDigit(currentChar))
-        takeIt();
-      return Token.IDENTIFIER;
-
-    case '0':  case '1':  case '2':  case '3':  case '4':
-    case '5':  case '6':  case '7':  case '8':  case '9':
-      takeIt();
-      while (isDigit(currentChar))
-        takeIt();
-      return Token.INTLITERAL;
-
-    case '+':  case '-':  case '*': case '/':  case '=':
-    case '<':  case '>':  case '\\':  case '&':  case '@':
-    case '%':  case '^':  case '?':
-      takeIt();
-      while (isOperator(currentChar))
-        takeIt();
-      return Token.OPERATOR;
-
-    case '\'':
-      takeIt();
-      takeIt(); // the quoted character
-      if (currentChar == '\'') {
-      	takeIt();
-        return Token.CHARLITERAL;
-      } else
-        return Token.ERROR;
-
-    case '.':
-      takeIt();
-      return Token.DOT;
-
-    case ':':
-      takeIt();
-      if (currentChar == '=') {
-        takeIt();
-        return Token.BECOMES;
-      } else
-        return Token.COLON;
-
-    case ';':
-      takeIt();
-      return Token.SEMICOLON;
-
-    case ',':
-      takeIt();
-      return Token.COMMA;
-
-    case '~':
-      takeIt();
-      return Token.IS;
-
-    case '|':
-        takeIt();
-        return Token.STICK;
-        
-    case '$':
-        takeIt();
-        return Token.DOLAR;        
-      
-    case '(':
-      takeIt();
-      return Token.LPAREN;
-
-    case ')':
-      takeIt();
-      return Token.RPAREN;
-
-    case '[':
-      takeIt();
-      return Token.LBRACKET;
-
-    case ']':
-      takeIt();
-      return Token.RBRACKET;
-
-    case '{':
-      takeIt();
-      return Token.LCURLY;
-
-    case '}':
-      takeIt();
-      return Token.RCURLY;
-
-    case SourceFile.EOT:
-      return Token.EOT;
-
-    default:
-      takeIt();
-      return Token.ERROR;
-    }
-  }*/
