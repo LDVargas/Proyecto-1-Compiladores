@@ -7,12 +7,15 @@ package Triangle.SyntacticAnalyzer;
 import javax.swing.*;
 import java.io.*;
 import java.util.Arrays;
-
+import GUI.Main;
 /**
  *
  * @author daniel
  */
 public class HtmlReporter {
+     
+     
+    
     public void generarHTMLToken(String nombreArchivo, StringBuffer currentSpelling, int kind) {
         String x = null;
         x = nombreArchivo.substring(0, nombreArchivo.length()-3);
@@ -40,7 +43,6 @@ public class HtmlReporter {
             
             
             if(kind >= 4 && kind <= 32){
-                System.err.println("kind en html " + kind);
                 bfWriter.write("<b>" + currentSpelling.toString() + "</b>");
                 //pWriter.println("<b>" + currentSpelling + "</b>");
             }
@@ -55,7 +57,6 @@ public class HtmlReporter {
             }
             
             if(kind == 2){
-                System.err.println("current spelling no es un token " + currentSpelling);
                 bfWriter.write(currentSpelling.toString());
             }
             /*else{    
@@ -119,36 +120,7 @@ public class HtmlReporter {
             else{
                 bfWriter.write(currentChar);
             }
-            //System.out.println(currentChar);
-            //bfWriter.write("escribe en el html");
-            /*switch (currentChar) {
-                case '!':{
-                    bfWriter.write(currentChar);
-                    while ((currentChar != SourceFile.EOL) && (currentChar != SourceFile.EOT))
-                      //bfWriter.write("<p style="+"font-family: 'DejaVu Sans', monospace;"+"><font color='#00b300'>" +currentChar + "\</font>\");
-                      bfWriter.write(currentChar);
-                    if (currentChar == SourceFile.EOL)
-                        bfWriter.write("<br>");
-                        //bfWriter.write(" +\"</font>\"  <br>");
-                    break;
-                  }
-
-                case '\r':{
-                    bfWriter.write("<br>");
-                }
-                case ' ':{ 
-                    bfWriter.write(" ");
-                    break;
-                }
-                case '\n': {
-                  bfWriter.write("<br>");
-                  break;
-                }
-
-                case '\t':{
-                    bfWriter.write("    ");
-                }
-            }*/
+            
             bfWriter.close();
             flWriter.close();
         } catch (Exception e) {
@@ -165,7 +137,11 @@ public class HtmlReporter {
     }
     
     public void prueba(){
-        System.out.println("prueba de htmlReporter");
+        
+        System.err.println("entra a la prueba");
     }
-    
 }
+    
+    
+    //*******************************************************************************************
+  

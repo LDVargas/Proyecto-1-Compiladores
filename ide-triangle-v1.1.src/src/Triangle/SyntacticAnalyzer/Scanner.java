@@ -136,7 +136,6 @@ public final class Scanner {
           takeIt();
       }
       break;
-
     case ' ': case '\n': case '\r': case '\t':
       takeIt();
       break;
@@ -264,7 +263,6 @@ public final class Scanner {
       
     
     System.out.println("Scan");
-
     currentlyScanningToken = false;
     
     while (currentChar == '!'
@@ -277,12 +275,10 @@ public final class Scanner {
     }
         
     //System.out.println("2");
-
     currentlyScanningToken = true;
     currentSpelling = new StringBuffer("");
     pos = new SourcePosition();
     pos.start = sourceFile.getCurrentLine();
-
     //System.out.println("3");
     kind = scanToken();
     pos.finish = sourceFile.getCurrentLine();
