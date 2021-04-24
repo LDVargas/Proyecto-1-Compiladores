@@ -863,7 +863,7 @@ public class Main extends javax.swing.JFrame {
     InputRedirector input = new InputRedirector(delegateInput);             // Redirects console input
     TreeVisitor treeVisitor = new TreeVisitor();                            // Draws the Abstract Syntax Trees
     TableVisitor tableVisitor = new TableVisitor();                         // Draws the Identifier Table
-    File directory;                                                         // The current directory.
+    public File directory;                                                         // The current directory.
     // [ End of Non-GUI variables declaration ]
     // </editor-fold>    
     

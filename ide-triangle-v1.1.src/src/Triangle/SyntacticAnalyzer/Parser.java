@@ -49,6 +49,7 @@ import Triangle.AbstractSyntaxTrees.IntegerExpression;
 import Triangle.AbstractSyntaxTrees.IntegerLiteral;
 import Triangle.AbstractSyntaxTrees.LetCommand;
 import Triangle.AbstractSyntaxTrees.LetExpression;
+import Triangle.AbstractSyntaxTrees.LoopCommand;
 import Triangle.AbstractSyntaxTrees.MultipleActualParameterSequence;
 import Triangle.AbstractSyntaxTrees.MultipleArrayAggregate;
 import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
@@ -83,7 +84,7 @@ import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 
 public class Parser {
-
+// private HtmlReporter htmlReporter;
   private Scanner lexicalAnalyser;
   private ErrorReporter errorReporter;
   private Token currentToken;
@@ -142,18 +143,14 @@ public class Parser {
 ///////////////////////////////////////////////////////////////////////////////
 
   public Program parseProgram() {
-
+       
     Program programAST = null;
-
-    /*previousTokenPosition.start = 0;
-    previousTokenPosition.finish = 0;
-    lexicalAnalyser.scanForHTML();
     
     previousTokenPosition.start = 0;
-    previousTokenPosition.finish = 0;*/
+    previousTokenPosition.finish = 0;
     currentToken = lexicalAnalyser.scan();
 
-      //System.out.println("antes del try de parser");
+      System.err.println("pasa por el parse program");
     try {
         //System.out.println("antes del command del try de parser");
       Command cAST = parseCommand();
@@ -313,25 +310,132 @@ public class Parser {
         acceptIt();
         Declaration dAST = parseDeclaration();
         accept(Token.IN);
-        Command cAST = parseSingleCommand();
+        Command cAST = parseCommand();//Command cAST = parseSingleCommand();
+        accept(Token.END);
         finish(commandPos);
         commandAST = new LetCommand(dAST, cAST, commandPos);
       }
       break;
-
-    case Token.IF:
-      {
+      
+    case Token.IF:{
         acceptIt();
-        Expression eAST = parseExpression();
+        Expression e1AST = parseExpression();
         accept(Token.THEN);
         Command c1AST = parseSingleCommand();
-        accept(Token.ELSE);
-        Command c2AST = parseSingleCommand();
-        finish(commandPos);
-        commandAST = new IfCommand(eAST, c1AST, c2AST, commandPos);
-      }
-      break;
+        /*if (currentToken.kind == Token.LPAREN) {
+            acceptIt();
+            accept(Token.ELSIF);
+            Expression e2AST = parseExpression();        
+            accept(Token.THEN);
+            Command c2AST= parseSingleCommand()
+                    
+                    acceptIt();
+          ActualParameterSequence apsAST = parseActualParameterSequence();
+          accept(Token.RPAREN);
+          finish(commandPos);
+          commandAST = new CallCommand(iAST, apsAST, commandPos);
+        }*/
+    }
+      
+//    case Token.IF:
+//      {
+//        acceptIt();
+//        Expression eAST = parseExpression();
+//        accept(Token.THEN);
+//        Command c1AST = parseSingleCommand();
+//        accept(Token.ELSE);
+//        Command c2AST = parseSingleCommand();
+//        finish(commandPos);
+//        commandAST = new IfCommand(eAST, c1AST, c2AST, commandPos);
+//      }
+//      break;
 
+    case Token.LOOP:{
+      acceptIt();
+        System.err.println("Entra al loop");
+        if(currentToken.kind == Token.WHILE){
+            System.err.println("entra al while del if");
+            acceptIt();
+            Expression eAST = parseExpression();
+            accept(Token.DO);
+            Command cAST = parseCommand();
+            accept(Token.END);
+            finish(commandPos);
+            commandAST = new LoopCommand(eAST, cAST, commandPos);
+            break;
+        }else if(currentToken.kind == Token.UNTIL){
+            acceptIt();
+            Expression eAST = parseExpression();
+            accept(Token.DO);
+            Command cAST = parseCommand();
+            accept(Token.END);
+            finish(commandPos);
+            commandAST = new LoopCommand(eAST, cAST, commandPos);
+            break;
+        }else if(currentToken.kind == Token.DO){
+            acceptIt();
+            Command cAST = parseCommand();
+            if(currentToken.kind == Token.WHILE){
+                acceptIt();
+                Expression eAST = parseExpression();
+                accept(Token.END);
+                finish(commandPos);
+                commandAST = new LoopCommand(cAST, eAST, commandPos);
+                break;
+            }else if(currentToken.kind == Token.UNTIL){
+                acceptIt();
+                Expression eAST = parseExpression();
+                accept(Token.END);
+                finish(commandPos);
+                commandAST = new LoopCommand(cAST, eAST, commandPos);
+                break;
+            }
+        }else if(currentToken.kind==Token.FOR){
+            System.err.println("entra al loop for");
+            acceptIt();
+            Identifier iAST= parseIdentifier();
+            accept(Token.FROM);
+            Expression e1AST = parseExpression();
+            accept(Token.TO);
+            Expression e2AST = parseExpression();
+            if(currentToken.kind == Token.DO){
+                acceptIt();
+                Command cAST = parseCommand();
+                accept(Token.END);
+                finish(commandPos);
+                commandAST = new LoopCommand(e1AST, e2AST, cAST, iAST, commandPos);
+                break;
+            }else if(currentToken.kind==Token.WHILE){
+                System.err.println("entra al while de for");
+                acceptIt();
+                Expression e3AST = parseExpression();
+                accept(Token.DO);
+                Command cAST = parseCommand();
+                accept(Token.END);
+                finish(commandPos);
+                commandAST = new LoopCommand(e1AST, e2AST, e3AST, cAST, iAST, commandPos);
+                break;
+            }else if(currentToken.kind == Token.UNTIL){
+                acceptIt();
+                Expression e3AST = parseExpression();
+                accept(Token.DO);
+                Command cAST = parseCommand();
+                accept(Token.END);
+                finish(commandPos);
+                commandAST = new LoopCommand(e1AST, e2AST, e3AST, cAST, iAST, commandPos);
+                break;
+            }
+        }
+    }  
+    
+    
+    case Token.NOTHING:{
+        acceptIt();
+        finish(commandPos);
+        commandAST = new EmptyCommand(currentToken.position);
+        break;
+    }
+      
     case Token.WHILE:
       {
         acceptIt();
@@ -342,7 +446,7 @@ public class Parser {
         commandAST = new WhileCommand(eAST, cAST, commandPos);
       }
       break;
-
+      
     case Token.SEMICOLON:
     case Token.END:
     case Token.ELSE:
