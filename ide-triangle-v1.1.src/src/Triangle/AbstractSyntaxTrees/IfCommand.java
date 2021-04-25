@@ -26,10 +26,26 @@ public class IfCommand extends Command {
     C2 = c2AST;
   }
 
+    public IfCommand(Expression E, Command C1, SourcePosition thePosition) {
+        super(thePosition);
+        this.E = E;
+        this.C1 = C1;
+    }
+
+    public IfCommand(Expression E, Command C1, Command C2, Command C3, SourcePosition thePosition) {
+        super(thePosition);
+        this.E = E;
+        this.C1 = C1;
+        this.C2 = C2;
+        this.C3 = C3;
+    }
+
+    
+  
   public Object visit(Visitor v, Object o) {
     return v.visitIfCommand(this, o);
   }
 
   public Expression E;
-  public Command C1, C2;
+  public Command C1, C2,C3;
 }

@@ -251,6 +251,34 @@ public class Parser {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+  Command parseRestOfIf(SourcePosition commandPos) throws SyntaxError{        
+        Command commandAST = null;
+        
+        start(commandPos);
+        switch (currentToken.kind) {
+            case Token.ELSIF:{
+                acceptIt();
+                Expression eAST = parseExpression();
+                accept(Token.THEN);
+                Command cAST = parseCommand();
+                if(currentToken.kind== Token.ELSIF){
+                    parseRestOfIf(commandPos);
+                }else{
+                    commandAST = new IfCommand(eAST, cAST, commandPos);
+                    return commandAST;
+                }
+            }
+            case Token.ELSE:{
+                return commandAST;
+            }
+               
+        }
+        return null;
+  }
+  
+  
+  
+  
 // parseCommand parses the command, and constructs an AST
 // to represent its phrase structure.
 
@@ -322,39 +350,27 @@ public class Parser {
         Expression e1AST = parseExpression();
         accept(Token.THEN);
         Command c1AST = parseSingleCommand();
-        /*if (currentToken.kind == Token.LPAREN) {
+        if(currentToken.kind==Token.ELSIF){
+            Command c2AST = parseRestOfIf(commandPos);
+            accept(Token.ELSE);
+            Command c3AST = parseSingleCommand();
+            accept(Token.END);
+            finish(commandPos);
+            commandAST = new IfCommand(e1AST, c1AST, c2AST, c3AST, commandPos);
+        }else if(currentToken.kind == Token.ELSE){
             acceptIt();
-            accept(Token.ELSIF);
-            Expression e2AST = parseExpression();        
-            accept(Token.THEN);
-            Command c2AST= parseSingleCommand()
-                    
-                    acceptIt();
-          ActualParameterSequence apsAST = parseActualParameterSequence();
-          accept(Token.RPAREN);
-          finish(commandPos);
-          commandAST = new CallCommand(iAST, apsAST, commandPos);
-        }*/
+            Command c2AST = parseSingleCommand();
+            accept(Token.END);
+            finish(commandPos);
+            commandAST = new IfCommand(e1AST, c1AST, c2AST, commandPos);
+        }
     }
-      
-//    case Token.IF:
-//      {
-//        acceptIt();
-//        Expression eAST = parseExpression();
-//        accept(Token.THEN);
-//        Command c1AST = parseSingleCommand();
-//        accept(Token.ELSE);
-//        Command c2AST = parseSingleCommand();
-//        finish(commandPos);
-//        commandAST = new IfCommand(eAST, c1AST, c2AST, commandPos);
-//      }
-//      break;
+    break;
 
     case Token.LOOP:{
-      acceptIt();
-        System.err.println("Entra al loop");
+        acceptIt();
+        
         if(currentToken.kind == Token.WHILE){
-            System.err.println("entra al while del if");
             acceptIt();
             Expression eAST = parseExpression();
             accept(Token.DO);
@@ -391,7 +407,6 @@ public class Parser {
                 break;
             }
         }else if(currentToken.kind==Token.FOR){
-            System.err.println("entra al loop for");
             acceptIt();
             Identifier iAST= parseIdentifier();
             accept(Token.FROM);
@@ -407,6 +422,9 @@ public class Parser {
                 break;
             }else if(currentToken.kind==Token.WHILE){
                 System.err.println("entra al while de for");
+                if(currentToken.kind == Token.IDENTIFIER){
+                    System.err.println("entra al if de prueba");
+                }
                 acceptIt();
                 Expression e3AST = parseExpression();
                 accept(Token.DO);
@@ -436,7 +454,7 @@ public class Parser {
         break;
     }
       
-    case Token.WHILE:
+    /*case Token.WHILE:
       {
         acceptIt();
         Expression eAST = parseExpression();
@@ -445,9 +463,9 @@ public class Parser {
         finish(commandPos);
         commandAST = new WhileCommand(eAST, cAST, commandPos);
       }
-      break;
+      break;*/
       
-    case Token.SEMICOLON:
+    /*case Token.SEMICOLON:
     case Token.END:
     case Token.ELSE:
     case Token.IN:
@@ -456,7 +474,7 @@ public class Parser {
       finish(commandPos);
       commandAST = new EmptyCommand(commandPos);
       break;
-
+*/
     default:
       syntacticError("\"%\" cannot start a command",
         currentToken.spelling);
@@ -466,7 +484,10 @@ public class Parser {
 
     return commandAST;
   }
+  
+  
 
+          //SourcePosition commandPos = new SourcePosition();
 ///////////////////////////////////////////////////////////////////////////////
 //
 // EXPRESSIONS

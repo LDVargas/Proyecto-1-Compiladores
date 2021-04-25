@@ -74,9 +74,11 @@ final class Token extends Object {
     ELSE		= 8,
     ELSIF              =9,//cambiar a elsif, abajo igual
     END			= 10,
-    FUNC		= 11,
-    FOR = 12,
-    FROM = 13,
+    FOR = 11,
+    FROM = 12,
+    FUNC		= 13,
+    
+    
     IF			= 14,
     IN			= 15,
     LET			= 16,
@@ -133,9 +135,9 @@ final class Token extends Object {
     "else",
     "elsif",//corregir elsif
     "end",
-    "func",
     "for",
     "from",
+    "func",    
     "if",
     "in",
     "let",

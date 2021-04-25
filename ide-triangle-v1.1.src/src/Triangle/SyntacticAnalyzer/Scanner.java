@@ -335,6 +335,7 @@ public final class Scanner {
     
     tok = new Token(kind, currentSpelling.toString(), pos);
     //System.out.println("6");
+    System.out.println("Token "  + tok.toString());
     htmlReporter.generarHTMLToken(sourceFile.sourceFile.getName(),currentSpelling, tok.kind);
     
     if (debug)
