@@ -30,6 +30,7 @@ import Triangle.AbstractSyntaxTrees.FuncActualParameter;
 import Triangle.AbstractSyntaxTrees.FuncDeclaration;
 import Triangle.AbstractSyntaxTrees.FuncFormalParameter;
 import Triangle.AbstractSyntaxTrees.Identifier;
+import Triangle.AbstractSyntaxTrees.LoopCommand;
 import Triangle.AbstractSyntaxTrees.IfCommand;
 import Triangle.AbstractSyntaxTrees.IfExpression;
 import Triangle.AbstractSyntaxTrees.IntTypeDenoter;
@@ -37,6 +38,7 @@ import Triangle.AbstractSyntaxTrees.IntegerExpression;
 import Triangle.AbstractSyntaxTrees.IntegerLiteral;
 import Triangle.AbstractSyntaxTrees.LetCommand;
 import Triangle.AbstractSyntaxTrees.LetExpression;
+import Triangle.AbstractSyntaxTrees.LoopCommand;
 import Triangle.AbstractSyntaxTrees.MultipleActualParameterSequence;
 import Triangle.AbstractSyntaxTrees.MultipleArrayAggregate;
 import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
@@ -123,6 +125,16 @@ public class TableVisitor implements Visitor {
   public Object visitLetCommand(LetCommand ast, Object o) {     
       ast.D.visit(this, null);
       ast.C.visit(this, null);
+      
+      return(null);
+  }  
+  
+  public Object visitLoopCommand5(LoopCommand ast, Object){
+      ast.C.visit(this, null);
+      ast.E1.visit(this, null);
+      ast.E2.visit(this, null);
+      ast.E3.visit(this, null);
+      ast.I.visit(this, null);
       
       return(null);
   }

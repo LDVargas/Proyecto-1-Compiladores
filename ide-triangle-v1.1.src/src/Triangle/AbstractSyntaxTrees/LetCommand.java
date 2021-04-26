@@ -28,6 +28,7 @@ public class LetCommand extends Command {
     return v.visitLetCommand(this, o);
   }
 
+  
   public Declaration D;
   public Command C;
 }

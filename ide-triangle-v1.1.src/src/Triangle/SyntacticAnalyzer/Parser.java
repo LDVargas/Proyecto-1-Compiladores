@@ -150,15 +150,10 @@ public class Parser {
     previousTokenPosition.finish = 0;
     currentToken = lexicalAnalyser.scan();
 
-      System.err.println("pasa por el parse program");
     try {
-        //System.out.println("antes del command del try de parser");
       Command cAST = parseCommand();
-        //System.out.println("antes del programAST del try de parser");
       programAST = new Program(cAST, previousTokenPosition);
-        //System.out.println("antes del if del try de parser");
       if (currentToken.kind != Token.EOT) {
-          //System.out.println("dentro del if del try de parser");
         syntacticError("\"%\" not expected after end of program",
           currentToken.spelling);
       }
@@ -327,14 +322,8 @@ public class Parser {
       }
       break;
 
-    /*case Token.BEGIN:
-      acceptIt();
-      commandAST = parseCommand();
-      accept(Token.END);
-      break;*/
-
     case Token.LET:
-      {
+      {  
         acceptIt();
         Declaration dAST = parseDeclaration();
         accept(Token.IN);
@@ -349,17 +338,17 @@ public class Parser {
         acceptIt();
         Expression e1AST = parseExpression();
         accept(Token.THEN);
-        Command c1AST = parseSingleCommand();
+        Command c1AST = parseCommand();
         if(currentToken.kind==Token.ELSIF){
             Command c2AST = parseRestOfIf(commandPos);
             accept(Token.ELSE);
-            Command c3AST = parseSingleCommand();
+            Command c3AST = parseCommand();
             accept(Token.END);
             finish(commandPos);
             commandAST = new IfCommand(e1AST, c1AST, c2AST, c3AST, commandPos);
         }else if(currentToken.kind == Token.ELSE){
             acceptIt();
-            Command c2AST = parseSingleCommand();
+            Command c2AST = parseCommand();
             accept(Token.END);
             finish(commandPos);
             commandAST = new IfCommand(e1AST, c1AST, c2AST, commandPos);
@@ -369,6 +358,7 @@ public class Parser {
 
     case Token.LOOP:{
         acceptIt();
+        //System.err.println();
         
         if(currentToken.kind == Token.WHILE){
             acceptIt();
@@ -454,16 +444,6 @@ public class Parser {
         break;
     }
       
-    /*case Token.WHILE:
-      {
-        acceptIt();
-        Expression eAST = parseExpression();
-        accept(Token.DO);
-        Command cAST = parseSingleCommand();
-        finish(commandPos);
-        commandAST = new WhileCommand(eAST, cAST, commandPos);
-      }
-      break;*/
       
     /*case Token.SEMICOLON:
     case Token.END:
@@ -485,9 +465,7 @@ public class Parser {
     return commandAST;
   }
   
-  
 
-          //SourcePosition commandPos = new SourcePosition();
 ///////////////////////////////////////////////////////////////////////////////
 //
 // EXPRESSIONS
@@ -719,13 +697,29 @@ public class Parser {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+  Declaration parseRestOfLet(SourcePosition commandPos) throws SyntaxError{
+      Declaration declarationST = null;
+      
+      start(commandPos);
+      Declaration dAST = parseSingleDeclaration();
+      if(currentToken.kind == Token.IN){
+          return dAST;
+      }
+      else if(currentToken.kind == Token.SEMICOLON){
+          parseRestOfLet(commandPos);
+      }
+      return null;
+  }
+  
+  
+  
   Declaration parseDeclaration() throws SyntaxError {
     Declaration declarationAST = null; // in case there's a syntactic error
 
     SourcePosition declarationPos = new SourcePosition();
     start(declarationPos);
     declarationAST = parseSingleDeclaration();
-    while (currentToken.kind == Token.SEMICOLON) {
+    while (currentToken.kind == Token.SEMICOLON ) {
       acceptIt();
       Declaration d2AST = parseSingleDeclaration();
       finish(declarationPos);
@@ -740,7 +734,6 @@ public class Parser {
 
     SourcePosition declarationPos = new SourcePosition();
     start(declarationPos);
-
     switch (currentToken.kind) {
 
     case Token.CONST:
@@ -759,8 +752,10 @@ public class Parser {
         acceptIt();
         Identifier iAST = parseIdentifier();
         accept(Token.COLON);
+        //Expression eAST = parseExpression();
         TypeDenoter tAST = parseTypeDenoter();
         finish(declarationPos);
+        
         declarationAST = new VarDeclaration(iAST, tAST, declarationPos);
       }
       break;
@@ -774,6 +769,7 @@ public class Parser {
         accept(Token.RPAREN);
         accept(Token.IS);
         Command cAST = parseSingleCommand();
+        accept(Token.END);
         finish(declarationPos);
         declarationAST = new ProcDeclaration(iAST, fpsAST, cAST, declarationPos);
       }
@@ -806,7 +802,7 @@ public class Parser {
         declarationAST = new TypeDeclaration(iAST, tAST, declarationPos);
       }
       break;
-
+      
     default:
       syntacticError("\"%\" cannot start a declaration",
         currentToken.spelling);

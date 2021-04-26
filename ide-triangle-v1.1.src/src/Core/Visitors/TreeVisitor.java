@@ -37,6 +37,7 @@ import Triangle.AbstractSyntaxTrees.IntegerExpression;
 import Triangle.AbstractSyntaxTrees.IntegerLiteral;
 import Triangle.AbstractSyntaxTrees.LetCommand;
 import Triangle.AbstractSyntaxTrees.LetExpression;
+import Triangle.AbstractSyntaxTrees.LoopCommand;
 import Triangle.AbstractSyntaxTrees.MultipleActualParameterSequence;
 import Triangle.AbstractSyntaxTrees.MultipleArrayAggregate;
 import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
@@ -106,6 +107,18 @@ public class TreeVisitor implements Visitor {
     
     public Object visitLetCommand(LetCommand ast, Object obj) {
         return(createBinary("Let Command", ast.D, ast.C));
+    }
+    
+    public Object visitLoopCommand2(LoopCommand ast, Object obj){
+        return(createBinary("Loop Command", ast, ast));
+    }
+    
+    public Object visitLoopCommand4(LoopCommand ast,Object obj){
+        return(createQuaternary("Loop Command", ast, ast, ast, ast));
+    }
+    
+    public Object visitLoopCommand5(LoopCommand ast,Object obj){
+        return (createQuinary("Loop Command", ast, ast, ast, ast, ast));
     }
     
     public Object visitSequentialCommand(SequentialCommand ast, Object obj) {
@@ -437,4 +450,14 @@ public class TreeVisitor implements Visitor {
         return(t);             
     }
     // </editor-fold>
+    
+    public DefaultMutableTreeNode createQuinary(String caption, AST child1, AST child2,AST child3,AST child4,AST child5){
+        DefaultMutableTreeNode t = new DefaultMutableTreeNode(caption);
+        t.add((DefaultMutableTreeNode)child1.visit(this, null));
+        t.add((DefaultMutableTreeNode)child2.visit(this, null));
+        t.add((DefaultMutableTreeNode)child3.visit(this, null));
+        t.add((DefaultMutableTreeNode)child4.visit(this, null));
+        t.add((DefaultMutableTreeNode)child5.visit(this, null));
+        return (t);
+    }
 }

@@ -123,48 +123,48 @@ final class Token extends Object {
     ERROR		= 48;
 
   public static String[] tokenTable = new String[] {
-    "<int>",
-    "<char>",
-    "<identifier>",
-    "<operator>",
-    "array",
+    "<int>",    //0
+    "<char>",//1
+    "<identifier>",//2
+    "<operator>",//3
+    "array",//4
     //"begin",//quitar
-    "choose",
-    "const",
-    "do",
-    "else",
-    "elsif",//corregir elsif
-    "end",
-    "for",
-    "from",
-    "func",    
-    "if",
-    "in",
-    "let",
-    "loop",
-    "nothing",
-    "of",
-    "package",
-    "private",
-    "proc",
-    "record",
-    "recursive",
-    "then",
-    "to",
-    "type",
-    "until",
-    "var",
-    "when",
-    "while",
-    ".",
-    ":",
-    ";",
-    ",",
-    ":=",
-    "~",
-    "|",
-    "$",
-    "..",//preguntar por el doble punto al profe
+    "choose",//5
+    "const",//6
+    "do",//7
+    "else",//8
+    "elsif",//9
+    "end",//10
+    "for",//11
+    "from",//12
+    "func",    //13
+    "if",//14
+    "in",//15
+    "let",//16
+    "loop",//17
+    "nothing",//18
+    "of",//19
+    "package",//20
+    "private",//21
+    "proc",//22
+    "record",//23
+    "recursive",//24
+    "then",//25
+    "to",//26
+    "type",//27
+    "until",//28
+    "var",//29
+    "when",//30
+    "while",//31
+    ".",//32
+    ":",//33
+    ";",//34
+    ",",//35
+    ":=",//36
+    "~",//37
+    "|",//38
+    "$",//39
+    "..",//40
     "(",
     ")",
     "[",
