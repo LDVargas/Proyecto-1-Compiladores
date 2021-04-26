@@ -1,0 +1,77 @@
+<b>let</b><br><br>
+&nbsp;<b>var</b> i : Char;<br><br>
+&nbsp;<b>var</b> j : Integer; <br><br>
+&nbsp;<b>const</b> k ~ <font style='padding-left:1em'><font color='#0000cd'>8</font>;<br><br>
+&nbsp;<b>type</b> dia ~ Integer <br><br>
+<b>in</b> <br><br>
+&nbsp;put(i); <br><br>
+&nbsp;put(i) <br><br>
+<b>end</b><br><br>
+<br><br>
+! OK<br><br>
+<b>let</b><br><br>
+&nbsp;<b>var</b> i : Char;<br><br>
+&nbsp;<b>var</b> j : Integer; <br><br>
+&nbsp;<b>const</b> k ~ <font style='padding-left:1em'><font color='#0000cd'>8</font>;<br><br>
+&nbsp;<b>type</b> dia ~ Integer <br><br>
+<b>in</b> <br><br>
+&nbsp;put(i); <br><br>
+&nbsp;put(i) <br><br>
+<b>end</b><br><br>
+<br><br>
+! OK<br><br>
+<b>let</b><br><br>
+&nbsp;<b>var</b> i : Char;<br><br>
+&nbsp;<b>var</b> j : Integer; <br><br>
+&nbsp;<b>const</b> k ~ <font style='padding-left:1em'><font color='#0000cd'>8</font>;<br><br>
+&nbsp;<b>type</b> dia ~ Integer <br><br>
+<b>in</b> <br><br>
+&nbsp;put(i); <br><br>
+&nbsp;put(i) <br><br>
+<b>end</b><br><br>
+<br><br>
+! OK<br><br>
+<b>let</b><br><br>
+&nbsp;<b>var</b> i : Char;<br><br>
+&nbsp;<b>var</b> j : Integer; <br><br>
+&nbsp;<b>const</b> k ~ <font style='padding-left:1em'><font color='#0000cd'>8</font>;<br><br>
+&nbsp;<b>type</b> dia ~ Integer <br><br>
+<b>in</b> <br><br>
+&nbsp;put(i); <br><br>
+&nbsp;put(i) <br><br>
+<b>end</b><br><br>
+<br><br>
+! OK<br><br>
+<b>let</b><br><br>
+&nbsp;<b>var</b> i : Char;<br><br>
+&nbsp;<b>var</b> j : Integer; <br><br>
+&nbsp;<b>const</b> k ~ <font style='padding-left:1em'><font color='#0000cd'>8</font>;<br><br>
+&nbsp;<b>type</b> dia ~ Integer <br><br>
+<b>in</b> <br><br>
+&nbsp;put(i); <br><br>
+&nbsp;put(i) <br><br>
+<b>end</b><br><br>
+<br><br>
+! OK<br><br>
+<b>let</b><br><br>
+&nbsp;<b>var</b> i : Char;<br><br>
+&nbsp;<b>var</b> j : Integer; <br><br>
+&nbsp;<b>const</b> k ~ <font style='padding-left:1em'><font color='#0000cd'>8</font>;<br><br>
+&nbsp;<b>type</b> dia ~ Integer <br><br>
+<b>in</b> <br><br>
+&nbsp;put(i); <br><br>
+&nbsp;put(i) <br><br>
+<b>end</b><br><br>
+<br><br>
+! OK<br><br>
+<b>let</b><br><br>
+&nbsp;<b>var</b> i : Char;<br><br>
+&nbsp;<b>var</b> j : Integer; <br><br>
+&nbsp;<b>const</b> k ~ <font style='padding-left:1em'><font color='#0000cd'>8</font>;<br><br>
+&nbsp;<b>type</b> dia ~ Integer <br><br>
+<b>in</b> <br><br>
+&nbsp;put(i); <br><br>
+&nbsp;put(i) <br><br>
+<b>end</b><br><br>
+<br><br>
+! OK<br><br>
