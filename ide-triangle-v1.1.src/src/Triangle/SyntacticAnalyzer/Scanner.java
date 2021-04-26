@@ -327,15 +327,11 @@ public final class Scanner {
 
     //System.out.println("3");
     kind = scanToken();
-    System.out.println("kind: " + kind);
-    System.out.println("currentSpelling: " + currentSpelling);
     pos.finish = sourceFile.getCurrentLine();
     //System.out.println("5");
     //System.out.println(sourceFile.sourceFile.getName());
     
     tok = new Token(kind, currentSpelling.toString(), pos);
-    //System.out.println("6");
-    System.out.println("Token "  + tok.toString());
     htmlReporter.generarHTMLToken(sourceFile.sourceFile.getName(),currentSpelling, tok.kind);
     
     if (debug)

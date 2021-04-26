@@ -46,17 +46,20 @@ public class HtmlReporter {
                 bfWriter.write("<b>" + currentSpelling.toString() + "</b>");
                 //pWriter.println("<b>" + currentSpelling + "</b>");
             }
-            if(kind == 0 || kind == 1){
+            else if(kind == 0 || kind == 1){
                 bfWriter.write("<font style='padding-left:1em'><font color='#0000cd'>" + 
                         currentSpelling + "</font>");
                 //pWriter.println("<font style='padding-left:1em'><font color='#0000cd'>" + 
                 //        currentSpelling + "</font>");
             }
-            if( kind >= 33){
+            else if( kind >= 33){
                 bfWriter.write(currentSpelling.toString());
             }
             
-            if(kind == 2){
+            else if(kind == 2){
+                bfWriter.write(currentSpelling.toString());
+            }
+            else if(kind == 3){
                 bfWriter.write(currentSpelling.toString());
             }
             /*else{    

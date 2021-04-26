@@ -56,6 +56,7 @@ import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
 import Triangle.AbstractSyntaxTrees.MultipleFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.MultipleRecordAggregate;
 import Triangle.AbstractSyntaxTrees.Operator;
+import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcActualParameter;
 import Triangle.AbstractSyntaxTrees.ProcDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
@@ -728,7 +729,7 @@ public class Parser {
     }
     return declarationAST;
   }
-
+  
   Declaration parseSingleDeclaration() throws SyntaxError {
     Declaration declarationAST = null; // in case there's a syntactic error
 
@@ -751,14 +752,26 @@ public class Parser {
       {
         acceptIt();
         Identifier iAST = parseIdentifier();
-        accept(Token.COLON);
-        //Expression eAST = parseExpression();
-        TypeDenoter tAST = parseTypeDenoter();
+        accept(Token.COLON); //let
+        //accept(Token.BECOMES);  // private
+        //Expression eAST = parseExpression(); //private
+        TypeDenoter tAST = parseTypeDenoter(); //let
         finish(declarationPos);
         
-        declarationAST = new VarDeclaration(iAST, tAST, declarationPos);
+        declarationAST = new VarDeclaration(iAST, tAST, declarationPos);//let
+        //declarationAST = new VarDeclaration(iAST, eAST, declarationPos);//private
       }
       break;
+      
+    case Token.PRIVATE:{
+        acceptIt();
+        Declaration dAST = parseDeclaration();
+        accept(Token.IN);
+        Declaration d2AST = parseDeclaration();
+        accept(Token.END);
+        declarationAST = new PrivateDeclaration(dAST,d2AST,declarationPos);
+    }
+    break;
 
     case Token.PROC:
       {

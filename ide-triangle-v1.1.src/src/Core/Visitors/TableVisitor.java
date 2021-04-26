@@ -129,7 +129,7 @@ public class TableVisitor implements Visitor {
       return(null);
   }  
   
-  public Object visitLoopCommand5(LoopCommand ast, Object){
+  /*public Object visitLoopCommand5(LoopCommand ast, Object){
       ast.C.visit(this, null);
       ast.E1.visit(this, null);
       ast.E2.visit(this, null);
@@ -137,7 +137,7 @@ public class TableVisitor implements Visitor {
       ast.I.visit(this, null);
       
       return(null);
-  }
+  }*/
   
   public Object visitSequentialCommand(SequentialCommand ast, Object o) { 
       ast.C1.visit(this, null);

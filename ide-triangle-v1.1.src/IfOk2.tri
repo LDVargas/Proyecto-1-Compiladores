@@ -1,7 +1,0 @@
-<b>if</b> <font style='padding-left:1em'><font color='#0000cd'>1</font><font style='padding-left:1em'><font color='#0000cd'>1</font> <b>then</b> puteol()<br><br>
-<b>elsif</b> <font style='padding-left:1em'><font color='#0000cd'>2</font><font style='padding-left:1em'><font color='#0000cd'>2</font> <b>then</b> puteol()<br><br>
-<b>elsif</b> <font style='padding-left:1em'><font color='#0000cd'>3</font><font style='padding-left:1em'><font color='#0000cd'>3</font> <b>then</b> puteol()<br><br>
-<b>else</b> puteol()<br><br>
-<b>end</b><br><br>
-<br><br>
-! OK
