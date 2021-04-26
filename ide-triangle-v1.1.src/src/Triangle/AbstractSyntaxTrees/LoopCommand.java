@@ -38,12 +38,25 @@ public class LoopCommand extends Command{
     }
 
     
-    public Object visit(Visitor v, Object o){
-        return v.visitLoopCommand(this, o);
+    public Object visit2(Visitor v, Object o){
+        return v.visitLoopCommand2(this, o);
+    }
+    
+    public Object visit4(Visitor v, Object o){
+        return v.visitLoopCommand4(this, o);
+    }
+    
+    public Object visit5(Visitor v, Object o){
+        return v.visitLoopCommand5(this, o);
     }
     
     public Expression E1,E2,E3;
     public Command C;
     public Identifier I;
+
+    @Override
+    public Object visit(Visitor v, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

@@ -129,13 +129,28 @@ public class TableVisitor implements Visitor {
       return(null);
   }  
   
-  public Object visitLoopCommand5(LoopCommand ast, Object){
+    @Override
+ 
+  public Object visitLoopCommand5(LoopCommand ast, Object o){
       ast.C.visit(this, null);
       ast.E1.visit(this, null);
       ast.E2.visit(this, null);
       ast.E3.visit(this, null);
       ast.I.visit(this, null);
-      
+      return(null);
+  }
+  
+  public Object visitLoopCommand4(LoopCommand ast, Object o){
+      ast.E1.visit(this, null);
+      ast.E2.visit(this, null);
+      ast.C.visit(this, null);
+      ast.I.visit(this, null);
+      return(null);
+  }
+  
+  public Object visitLoopCommand2(LoopCommand ast, Object o){
+      ast.E1.visit(this, null);
+      ast.C.visit(this, null);
       return(null);
   }
   
